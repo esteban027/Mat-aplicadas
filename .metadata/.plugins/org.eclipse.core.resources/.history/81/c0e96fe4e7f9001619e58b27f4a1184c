@@ -1,0 +1,143 @@
+package taller2;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Perceptron {
+	static int bj=0;
+
+	static double w0 = 1;
+	static double w1 = 1;
+	static double w2 = 1;
+	static double w3= 1;
+	static double w4 = 1;
+	static double c=0;
+
+	public static void main(String[] args) {
+		double matriz [][]= new double[6][6];
+		//los x0
+		matriz[0][0]=1;
+		matriz[1][0]=1;
+		matriz[2][0]=1;
+		matriz[3][0]=1;
+		matriz[4][0]=1;
+		matriz[5][0]=1;
+
+		matriz[0][1]=0.0724;
+		matriz[0][2]=-0.0076;
+		matriz[0][3]=1.3723;
+		matriz[0][4]=0.3361;
+
+		matriz[1][1]=-0.1353;
+		matriz[1][2]=-0.1433;
+		matriz[1][3]=1.4196;
+		matriz[1][4]=0.4347;
+
+		matriz[2][1]=-0.2298;
+		matriz[2][2]=-0.2961;
+		matriz[2][3]=0.331;
+		matriz[2][4]=0.1824;
+
+		matriz[3][1]=0.0769;
+		matriz[3][2]=0.0195;
+		matriz[3][3]=2.0069;
+		matriz[3][4]=0.5304;
+
+		matriz[4][1]=0.3776;
+		matriz[4][2]=0.1075;
+		matriz[4][3]=3.2651;
+		matriz[4][4]=0.3548;
+
+		matriz[5][1]=0.1933;
+		matriz[5][2]=0.0473;
+		matriz[5][3]=2.2506;
+		matriz[5][4]=0.3309;
+
+		Scanner in = new Scanner(System.in);
+		int num=0;
+
+		System.out.println("PERCEPTRON");
+		System.out.println("==========="+"\n");
+		System.out.println("ingrese las salida para la matriz 6x6 predeterminada:");
+		for (int i = 0; i < matriz.length; i++) {
+			System.out.println("Ingrese el dato "+(i+1));
+			num = in.nextInt();
+			if(num>1){
+				System.out.println("ERROR! ingresa un numero valido");
+				System.exit(0);
+			}else{
+				matriz[i][5]=num;
+			}
+		}
+		System.out.println("Los datos se ingresaron con exito!");
+		for (int i = 0; i < matriz.length; i++) { 
+			for (int j = 0; j < matriz[i].length; j++) {
+				System.out.print(matriz[i][j] + "\t");
+			}
+			System.out.println(	);
+		}
+		funcionSalida(matriz);
+		
+
+
+	}
+	public static void funcionSalida(double matriz[][]){
+		 double []fila={0,0,0,0,0,0};
+	
+		int a=0;
+		
+		while(c<5){
+			
+			for (int i = 0; i < matriz.length; i++) { 
+				c=0;
+				System.out.println(c);
+				recalcularPesos(fila);
+				c=c+funcion(fila);
+				System.out.println("Iteracion :"+a);
+				a++;
+				System.out.println( "w0=  "+w0);
+				System.out.println("w1= " +w1);
+				System.out.println("w2= "+w2);
+				System.out.println("w3 = "+w3);
+				System.out.println("w4 = "+w4);
+				for (int j = 0; j < matriz[i].length; j++) {
+					
+					fila[j]=matriz[i][j];
+					
+				}
+				
+				
+			
+				
+				System.out.println(Arrays.toString(fila));
+			}
+		
+		}
+		
+	}
+	
+	public static int funcion(double d[]){
+		int compa=0;
+		double y=(w0*d[0])+(w1*d[1])+(w2*d[2])+(w3*d[3])+(w4*d[4]);
+		if(y>=0){
+			compa=1;
+		}else{
+			compa=0;
+		}
+		if(compa==d[5]){
+			return 1;
+		}else{
+			return 0;
+		}
+
+	}
+
+	public static void recalcularPesos(double d[]){
+		double y=(w0*d[0])+(w1*d[1])+(w2*d[2])+(w3*d[3])+(w4*d[4]);
+		w0=w0+(1*(d[5]-y)*d[0]);
+		w1=w1+(1*(d[5]-y)*d[1]);
+		w2=w2+(1*(d[5]-y)*d[2]);
+		w3=w3+(1*(d[5]-y)*d[3]);
+		w4=w4+(1*(d[5]-y)*d[4]);
+	
+	}		
+}
